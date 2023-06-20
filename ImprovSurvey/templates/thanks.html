@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Robot Improvisation Survey{% endblock %}
+{% block navbar_title %}Robot Improvisation Survey{% endblock %}
+{% block head %}
+<script>
+    function next_status(){
+        //var next_status = '{{hide_next_btn}}';
+        console.log("in status handling");
+        //console.log(next_status);
+        //if (next_status == False){
+        //    document.getElementById("next_video").style.display = "block";
+        //}
+    }
+</script>
+{% endblock %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thanks for answering</title>
+</head>
+<body onload="next_status()">
+
+    <div name="eng_elem" style="display: none">
+        <h1 style="text-align: center">Thanks for answering 😀</h1>
+    </div>
+    <div name="it_elem" style="display: none">
+        <h1 style="text-align: center">Grazie per aver partecipato 😀</h1>
+    </div>
+
+    <div id="next_video" style='{{hide_next_btn}}'>
+        <div class="row  justify-content-center">
+            <div class ="d-flex justify-content-center">
+                <div name="eng_elem" style="display: none">
+                    <p class="lh-base"> If you would like to see another video, press the <b>Next</b> button. </p>
+                </div>
+                <div name="it_elem" style="display: none">
+                    <p class="lh-base"> Se hai voglia di vedere un altro video, premi <b>Next</b>. </p>
+                </div>
+            </div>
+        </div>
+        <div class="row  justify-content-end">
+            <div class ="d-flex justify-content-end">
+                <div class="col-md-2">
+                    <form id="evaluationForm" action="{{ url_for('handle_another_video') }}" method="post">
+                        <input type="hidden" id="session_id" name="session_id" value={{id}}>
+                        <button type="submit" class="btn btn-primary" id="submit" >Next</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div name="eng_elem" style="display: none">
+        <p class="lh-base"> Your answer has been recorded, <b>close</b> the page to finish the experiment. </p>
+    </div>
+    <div name="it_elem" style="display: none">
+        <p class="lh-base"> Le tue risposte sono state registrate, <b>chiudi</b> la pagina per terminare l'esperimento. </p>
+    </div>
+
+
+</body>
+</html>
+{%  endblock %}

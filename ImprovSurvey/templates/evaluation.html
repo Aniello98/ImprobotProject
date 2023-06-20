@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block title %}Robot Improvisation Survey{% endblock %}
+{% block navbar_title %}Robot Improvisation Survey{% endblock %}
+{% block head %}
+<script>
+  var tag = document.createElement('script');
+
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('video', {
+      events: {
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+
+  function onPlayerStateChange(event) {
+    console.log("in statechange");
+    if ( event.data == YT.PlayerState.ENDED){
+        console.log("in end");
+        var submitbtn = document.getElementById('submit');
+        submitbtn.disabled = false;
+    }
+  }
+
+  var answer = {
+    like:[],
+    dislike:[]
+  };
+  function handle_vote(vote){
+    console.log("in handle ans");
+    var like = document.getElementById("likebtn");
+    var dislike = document.getElementById("dislikebtn");
+    var lng = document.getElementById("langselector").value;
+    like.disabled = true;
+    dislike.disabled = true;
+    var videotime = player.playerInfo.currentTime;
+    if (vote.id == "likebtn"){
+      console.log("like");
+      answer.like.push(videotime);
+      document.getElementById(lng+"_dislike_notice").style.display = 'none';
+      document.getElementById(lng+"_like_notice").style.display = 'block';
+    } else if(vote.id == "dislikebtn"){
+      console.log("dislike");
+      answer.dislike.push(videotime);
+      document.getElementById(lng+"_dislike_notice").style.display = 'block';
+      document.getElementById(lng+"_like_notice").style.display = 'none';
+    } else{
+      consol.log("an error occurred while voting");
+    }
+    like.disabled = false;
+    dislike.disabled = false;
+    console.log(videotime);
+    console.log(answer.like);
+    console.log(answer.dislike);
+  }
+
+  function handle_submission(){
+    console.log("onsubmit");
+    var toPass = JSON.stringify(answer);
+    document.getElementById("answerinput").value = toPass;
+  }
+
+</script>
+
+{% endblock %}
+{% block navbar_extra %}
+<div class="justify-content-end">
+
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasInstructions" aria-controls="offcanvasInstructions">Instructions</button>
+    </li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasInstructions" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Instructions</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      {% include 'instructions.html' %}
+    </div>
+</div>
+
+<div class="row justify-content-center mt-3 mb-2">
+  <div class="col-sm-12 col-md-10 col-lg-8">
+        <div  name="eng_elem">
+          <p class="lh-base"> Play the video to start the experiment. </p>
+          <p class="lh-base"> <b>Notice</b> that you can Submit your answer only if the video is ended! </p>
+          <p class="lh-base"> Press <b>YES</b> if you think the robot is performing the scene <b>COHERENTLY</b>, or <b>NO</b> if <b>INCOHERENTLY</b>. </p>
+        </div>
+        <div style="display: none" name="it_elem">
+          <p class="lh-base"> Premi play al video per iniziare l'esperimento.</p>
+          <p class="lh-base"> <b>Nota:</b> puoi consegnare la tua risposta premendo su "Submit" solo se il video è terminato!</p>
+          <p class="lh-base"> Premi <b>YES</b> se pensi che il robot abbia reagito in maniera <b>COERENTE</b>, o <b>NO</b> se <b>INCOERENTE</b>. </p>
+        </div>
+      </div>
+      <div class="row justify-content-center d-flex w-100"> 
+        <div class="col-9"> 
+            <div class="row justify-content-center"> 
+                <div class=" ratio ratio-16x9 border" > 
+                  <iframe id="video" type="text/html" src={{link}} 
+                  title="YouTube video player" frameborder="0" 
+                  allow="accelerometer; clipboard-write; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe> 
+                </div> 
+              </div> 
+        </div> 
+        <div class="col-1 d-flex justify-content-center align-items-center flex-column"> 
+          <div class="row justify-content-center">
+            <button onclick="handle_vote(this)" style="max-width:50px;text-align: center;padding: 20px 6px;" type="button" id="likebtn" class="btn btn-success" value="COHERENT">Y<br>E<br>S</button> 
+          </div>
+          <div class="row justify-content-center">
+            <button onclick="handle_vote(this)" style="max-width:50px;text-align: center;padding: 20px 5px;" type="button" id="dislikebtn" class="btn btn-danger" value="NOT COHERENT">N<br>O</button> 
+          </div>
+        </div>
+</div>
+      </div>
+      </div>
+          
+        <div class="row">
+          <div name="eng_elem">
+            <p id="eng_like_notice" class="lh-base" style="display: none; color:green"> Coherent scene.</p>
+            <p id="eng_dislike_notice" class="lh-base" style="display: none;color:red"> Incoherent scene.</p>
+          </div>
+          <div name="it_elem" style="display: none;">
+            <p id="it_like_notice" class="lh-base" style="display: none; color:green"> Scena coerente.</p>
+            <p id="it_dislike_notice" class="lh-base" style="display: none;color:red"> Scena incoerente.</p>
+          </div>
+        </div>
+        
+        <div class="row  justify-content-end">
+          <div class ="d-flex justify-content-end">
+            <div class="col-md-2">
+              <form id="evaluationForm" action="{{ url_for('handle_answer') }}" method="post">
+                <input type="hidden" id="answerinput" name="answerinput" >
+                <input type="hidden" id="session_id" name="session_id" value={{id}}>
+                <button onclick="handle_submission()" type="submit" class="btn btn-primary" id="submit" disabled="disabled">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+              
+    </div>
+
+        
+{%  endblock %}
+  
