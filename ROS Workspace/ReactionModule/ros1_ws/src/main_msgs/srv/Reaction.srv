@@ -1,0 +1,15 @@
+string reaction
+float64 distance
+---
+int64 approach_dir
+float64 approach_dist
+float64 approach_speed
+int64 rotate_dir
+float64 rotate_speed
+string[] actions
+int64 pause_after
+bool correct_move
+bool adjust_angle
+bool tremble
+string[] actions_before_approach
+string[] actions_while_approach

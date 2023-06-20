@@ -1,0 +1,8 @@
+#command array [duration, pause_after, intensity]
+std_msgs/Float32MultiArray goal
+---
+#result definition
+bool response
+---
+#feedback
+int8 current_movement

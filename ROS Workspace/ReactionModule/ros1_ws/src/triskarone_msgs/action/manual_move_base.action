@@ -1,0 +1,19 @@
+#goal definition
+std_msgs/Float32MultiArray goal
+# correct movement
+bool correct
+# actor robot distance that i want to reach
+float32 ar_goal
+# Indicates if the robot needs to adjust its angle at the end of an action
+bool adjust_angle
+# commands for rotate_new
+int8 rotate_dir # 0: no rotation; 1: towards actor; -1: backward the actor
+float32 rotate_speed
+# if it should tremble while approaching
+bool tremble_while_approach
+---
+#result definition
+bool response
+---
+#feedback
+int8 current_movement
