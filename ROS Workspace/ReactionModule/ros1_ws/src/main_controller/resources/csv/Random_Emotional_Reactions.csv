@@ -1,0 +1,16 @@
+SCENIC_ACTION,joy,sadness,fear,anger,surprise
+attack,1,1,1,1,1
+scolding,1,1,1,1,1
+intimidate,1,1,1,1,1
+grudge,1,1,1,1,1
+sharing_happiness,1,1,1,1,1
+happy_person,1,1,1,1,1
+satisfaction,1,1,1,1,1
+sharing_fear,1,1,1,1,1
+running_away,1,1,1,1,1
+sharing_sadness,1,1,1,1,1
+disappointment,1,1,1,1,1
+surprise,1,1,1,1,1
+disbelief,1,1,1,1,1
+astonishment,1,1,1,1,1
+none,1,1,1,1,1

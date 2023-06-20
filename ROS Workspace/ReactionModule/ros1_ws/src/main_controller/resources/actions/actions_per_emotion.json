@@ -1,0 +1,7 @@
+{
+    "anger": ["attack", "scolding", "intimidate", "grudge"],
+    "fear": ["sharing_fear", "running_away"],
+    "joy": ["sharing_happiness", "happy_person", "satisfaction"],
+    "surprise": ["surprise", "disbelief", "astonishment"],
+    "sadness":["sharing_sadness", "disappointment"]
+}
