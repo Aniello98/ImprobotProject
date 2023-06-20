@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Human Evaluation of Robot's Reactions{% endblock %}
+{% block navbar_title %}Human Evaluation of Robot's Reactions{% endblock %}
+{% block head %}{% endblock %}
+{% block content %}
+<div name="eng_elem">
+  <div class="row justify-content-center mt-3">
+    <div class="col-10">
+      <div class="alert alert-warning" role="alert">
+        <h5 class="alert-heading">Notice!</h5>
+        <p class="mb-0">We suggest accessing using Google Chrome for the best browsing experience. We have received reports of malfunctions with other browsers. </p>
+        <p class="mb-0">If you land on a blank page, the video do not load, please refresh the page or try again later.</p>
+        <p class="mb-0">Feel free to <a class="alert-link" href="mailto:aniello.desantis@polimi.it?subject=[Robot Improvisation] Website helpdesk">reach out</a> if you notice any issues.</p>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-4">
+    <div class="col-10">
+      <h5>Welcome to our experiment!</h5>
+      <p class="lh-base mb-2">If you are here is because you have decided to give your contribution to science, congratulations!</p>
+      <p class="lh-base mb-2">As part of this experiment, you will be asked to express your opinion while whatching some videos.</p>
+      <p class="lh-base mb-2">The entire experiment will take about 10 minutes.</p>
+      <p class="lh-base mb-2">Please make sure to complete the form in one sitting, as it will NOT save your progress or allow you to continue your submission in the future.</p>
+      <p class="lh-base mb-2">You can only participate in the experiment once. Please avoid trying to participate more than one time.</p>
+      <p class="lh-base mb-2">Thank you for your collaboration! 🙂</p>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-3">
+    <div class="col-10">
+      <h6 class="mb-0">Privacy Disclaimer</h6>
+      <small>Please notice that we do not record any personal information and that your submission is completely anonymised.</small>
+    </div>
+  </div>
+</div>
+<div name="it_elem" style="display: none">
+  <div class="row justify-content-center mt-3">
+    <div class="col-10">
+      <div class="alert alert-warning" role="alert">
+        <h5 class="alert-heading">Nota!</h5>
+        <p class="mb-0">Ti suggeriamo di accedere usando Google Chrome per una maggiore affidabilità. Abbiamo notato malfunzionamenti con altri browser.</p>
+        <p class="mb-0">Se appare una pagina vuota, o i video non caricano, ricarica la pagina oppure prova di nuovo in un secondo momento.</p>
+        <p class="mb-0">Puoi contattarci <a class="alert-link" href="mailto:aniello.desantis@polimi.it?subject=[Robot Improvisation] Website helpdesk">qui</a> se noti qualche problema.</p>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-4">
+    <div class="col-10">
+      <h5>Benvenuto nell'esperimento!</h5>
+      <p class="lh-base mb-2">Se sei qui è perché hai deciso di dare il tuo contributo alla scienza, congratulazioni!</p>
+      <p class="lh-base mb-2">In questo esperimento ti verrà chiesto di esprimere dei giudizi durante la visione di un video.</p>
+      <p class="lh-base mb-2">Il tutto durerà solo 10 minuti.</p>
+      <p class="lh-base mb-2">Per favore, assicurati di completare l'esperimento in una seduta. Non potrai inviare il tuo contributo finché non avrai risposto a tutte le domande.</p>
+      <p class="lh-base mb-2">Puoi partecipare all' esperimento solo una volta. Per favore, evita di svolgere l'esperimento più di una volta.</p>
+      <p class="lh-base mb-2">Grazie per la tua collaborazione! 🙂</p>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-3">
+    <div class="col-10">
+      <h6 class="mb-0">Informativa sulla Privacy</h6>
+      <small>Ci teniamo a comunicare che non registriamo alcun dato personale, e che la tua risposta è completamente anonima.</small>
+    </div>
+  </div>
+</div>
+{% with accordion_open=true %}
+  {% include 'instructions.html' %}
+{% endwith %}
+
+<div class="row justify-content-center mt-4 mb-4">
+  <div class="col-10">
+    <div name="eng_elem">
+    <p class="lh-base">Press the Start button to start the survey.<br>
+    <span class="fw-semibold">Important:</span> if you land on a blank page, please simply refresh the page.</p>
+    </div>
+    <div name="it_elem">
+      <p class="lh-base">Premi il pulsante Start per iniziare.<br>
+      <span class="fw-semibold">Importante:</span> se ti appare una pagina vuota, ricarica la pagina.</p>
+      </div>
+
+    <form action="{{ url_for('start') }}" method="post">
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <button type="submit" class="btn btn-primary" name="start" value="start">Start</button>
+      </div>
+    </form>
+    
+  </div>
+
+</div>
+
+{%  endblock %}

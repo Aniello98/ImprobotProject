@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% block title %}Human Evaluation of Robot's Reactions{% endblock %}
+{% block navbar_title %}Human Evaluation of Robot's Reactions{% endblock %}
+{% block head %}
+<script type="text/javascript">
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+
+  function selected(i) {
+      $img = $('#image'+i);
+      $q2 = $('#question2_'+i);
+      // $img.style.visibility = 'visible';
+      $img.removeAttr('style');
+      $q2.removeClass('text-black-50');
+      $q2.find('input').prop( "disabled", false );
+  }
+  function check_submit(e) {
+    console.log("in check_submit")
+    var check = true;
+    $("#evaluationForm input:radio").each(function() {
+        var name = $(this).attr("name");
+        if($("input:radio[name="+name+"]:checked").length == 0) {
+            check = false;
+        }
+    });
+    if(check) {
+        $("#evaluationForm #submit").removeAttr("disabled");
+    } else {
+        $("#evaluationForm #submit").attr("disabled", "disabled");
+    }
+  }
+  $(function() {
+    $("#evaluationForm").validate();
+    $("#evaluationForm").on("change click", check_submit);
+    $("#carouselExampleSlidesOnly button").on("click", check_submit);
+    $("#evaluationForm").on('invalid', function(e) {
+        e.preventDefault();
+    });
+  });
+</script>
+{% endblock %}
+
+{% block navbar_extra %}
+<div class="justify-content-end">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasInstructions" aria-controls="offcanvasInstructions">Instructions</button>
+    </li>
+  </ul>
+</div>
+{% endblock %}
+{% block content %}
+<div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasInstructions" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Instructions</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    {% include 'instructions.html' %}
+  </div>
+</div>
+
+<div class="row justify-content-center mt-3 mb-5">
+  <div class="col-sm-12 col-md-10 col-lg-8">
+    <form id="evaluationForm" action="{{ url_for('handle_answer') }}" method="post">
+{#    <form id="evaluationForm" action="/404" method="post">#}
+
+              <div class="row justify-content-center d-flex w-100">
+                <div class="col-9">
+                    <div class="row justify-content-center">
+                        <div class=" ratio ratio-16x9 border" >
+                            <iframe id="video" type="text/html" src="{{links[0]['link']}}"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; clipboard-write; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
+                        </div>
+                    </div>
+                </div>
+              </div>
+              <div class="row justify-content-center d-flex w-100 mx-auto">
+                <div class="col-9 mb-3">
+                  <div class="row justify-content-center d-flex align-items-center">
+                    <div name="eng_elem" style="display: none">
+                      <label class="col-sm-12 col-md-6 col-form-label">Which reaction is the robot performing?</label>
+                    </div>
+                    <div name="it_elem" style="display: none">
+                      <label class="col-sm-12 col-md-6 col-form-label">Quale azione sta interpretando il robot?</label>
+                    </div>
+                    <div class="row justify-content-center d-flex align-items-center">
+                    
+                        <fieldset class="row justify-content-center d-flex align-items-center">
+                            <div class="row justify-content-center d-flex align-items-left">
+                              <div class="col-sm-12 col-md-12 me-0 form-check-inline">
+                                <input class="form-check-input" type="radio" value={{links[0]['reaction'] + "-" + "attack"}} id={{links[0]['reaction'] + "attack"}} name={{links[0]['reaction']}} >
+                                <label class="form-check-label" for={{links[0]['reaction'] + "attack"}}>Attack (Attacco)</label>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center d-flex align-items-left">
+                              <div class="col-sm-12 col-md-12 me-0 form-check-inline">
+                                <input class="form-check-input" type="radio" value={{links[0]['reaction'] + "-" + "scolding"}} id={{links[0]['reaction'] + "scolding"}} name={{links[0]['reaction']}} >
+                                <label class="form-check-label" for={{links[0]['reaction'] + "scolding"}}>Scolding (Rimprovero)</label>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center d-flex align-items-left">
+                              <div class="col-sm-12 col-md-12 me-0 form-check-inline">
+                                <input class="form-check-input" type="radio" value={{links[0]['reaction'] + "-" + "intimidate"}} id={{links[0]['reaction'] + "intimidate"}} name={{links[0]['reaction']}} >
+                                <label class="form-check-label" for={{links[0]['reaction'] + "intimidate"}}>Intimidate (Intimidatorio)</label>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center d-flex align-items-left">
+                              <div class="col-sm-12 col-md-12 me-0 form-check-inline">
+                                <input class="form-check-input" type="radio" value={{links[0]['reaction'] + "-" + "grudge"}} id={{links[0]['reaction'] + "grudge"}} name={{links[0]['reaction']}} >
+                                <label class="form-check-label" for={{links[0]['reaction'] + "grudge"}}>Grudge (Rancore)</label>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center d-flex align-items-left">
+                                <div class="col-sm-12 col-md-12 me-0 form-check-inline">
+                                <input class="form-check-input" type="radio" value={{links[0]['reaction'] + "-" + "sharing_happiness"}} id={{links[0]['reaction'] + "sharing_happiness"}} name={{links[0]['reaction']}} >
+                                <label class="form-check-label" for={{links[0]['reaction'] + "sharing_happiness"}}>Sharing Happiness (Condivide Felicità)</label>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center d-flex align-items-left">
+                              <div class="col-sm-12 col-md-12 me-0 form-check-inline">
+                                <input class="form-check-input" type="radio" value={{links[0]['reaction'] + "-" + "happy_person"}} id={{links[0]['reaction'] + "happy_person"}} name={{links[0]['reaction']}} >
+                                <label class="form-check-label" for={{links[0]['reaction'] + "happy_person"}}>Happy Person (Felice)</label>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center d-flex align-items-left">
+                              <div class="col-sm-12 col-md-12 me-0 form-check-inline">
+                                <input class="form-check-input" type="radio" value={{links[0]['reaction'] + "-" + "satisfaction"}} id={{links[0]['reaction'] + "satisfaction"}} name={{links[0]['reaction']}} >
+                                <label class="form-check-label" for={{links[0]['reaction'] + "satisfaction"}}>Satisfaction (Contento)</label>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center d-flex align-items-left">
+                              <div class="col-sm-12 col-md-12 me-0 form-check-inline">
+                                <input class="form-check-input" type="radio" value={{links[0]['reaction'] + "-" + "sharing_fear"}} id={{links[0]['reaction'] + "sharing_fear"}} name={{links[0]['reaction']}} >
+                                <label class="form-check-label" for={{links[0]['reaction'] + "sharing_fear"}}>Sharing Fear (Condivide Paura)</label>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center d-flex align-items-left">
+                              <div class="col-sm-12 col-md-12 me-0 form-check-inline">
+                                <input class="form-check-input" type="radio" value={{links[0]['reaction'] + "-" + "running_away"}} id={{links[0]['reaction'] + "running_away"}} name={{links[0]['reaction']}} >
+                                <label class="form-check-label" for={{links[0]['reaction'] + "running_away"}}>Running Away (Scappa)</label>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center d-flex align-items-left">
+                              <div class="col-sm-12 col-md-12 me-0 form-check-inline">
+                                <input class="form-check-input" type="radio" value={{links[0]['reaction'] + "-" + "sharing_sadness"}} id={{links[0]['reaction'] + "sharing_sadness"}} name={{links[0]['reaction']}} >
+                                <label class="form-check-label" for={{links[0]['reaction'] + "sharing_sadness"}}>Sharing Sadness (Condivide Tristezza)</label>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center d-flex align-items-left">
+                              <div class="col-sm-12 col-md-12 me-0 form-check-inline">
+                                <input class="form-check-input" type="radio" value={{links[0]['reaction'] + "-" + "disappointment"}} id={{links[0]['reaction'] + "disappointment"}} name={{links[0]['reaction']}} >
+                                <label class="form-check-label" for={{links[0]['reaction'] + "disappointment"}}>Disappointment (Deluso)</label>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center d-flex align-items-left">
+                              <div class="col-sm-12 col-md-12 me-0 form-check-inline">
+                                <input class="form-check-input" type="radio" value={{links[0]['reaction'] + "-" + "surprise"}} id={{links[0]['reaction'] + "surprise"}} name={{links[0]['reaction']}} >
+                                <label class="form-check-label" for={{links[0]['reaction'] + "surprise"}}>Surprise (Sorpreso)</label>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center d-flex align-items-left">
+                              <div class="col-sm-12 col-md-12 me-0 form-check-inline">
+                                <input class="form-check-input" type="radio" value={{links[0]['reaction'] + "-" + "disbelief"}} id={{links[0]['reaction'] + "disbelief"}} name={{links[0]['reaction']}} >
+                                <label class="form-check-label" for={{links[0]['reaction'] + "disbelief"}}>Disbelief (Incredulo)</label>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center d-flex align-items-left">
+                                <div class="col-sm-12 col-md-12 me-0 form-check-inline">
+                                <input class="form-check-input" type="radio" value={{links[0]['reaction'] + "-" + "astonishment"}} id={{links[0]['reaction'] + "astonishment"}} name={{links[0]['reaction']}} >
+                                <label class="form-check-label" for={{links[0]['reaction'] + "astonishment"}}>Astonishment (Grande Stupore)</label>
+                                </div>
+                            </div>
+                        </fieldset>
+                    
+                </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row justify-content-center d-flex w-100 h-100 mb-4">
+                <div class="col-9 mb-3 h-100">
+                  <input type="hidden" id="session_id" name="session_id" value={{id}}>
+                  <button type="submit" class="btn btn-primary" id="submit" disabled="disabled">Next</button>
+                </div>
+              </div>
+            
+      
+    </form>
+  </div>
+</div>
+{%  endblock %}
