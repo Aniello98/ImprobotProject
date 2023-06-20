@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block title %}Robot Improvisation{% endblock %}
+{% block navbar_title %}Robot Improvisation{% endblock %}
+{% block head %}
+<script>
+  var tag = document.createElement('script');
+
+  tag.src = "https://www.youtube.com/iframe_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('video', {
+      events: {
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+
+  function onPlayerStateChange(event) {
+    console.log("in statechange");
+    if ( event.data == YT.PlayerState.ENDED){
+        console.log("in end");
+        var submitbtn = document.getElementById('submit');
+        submitbtn.disabled = false;
+    }
+  }
+
+  var answer = {
+    labels:[]
+  };
+  function handle_vote(vote){
+    console.log("in handle ans");
+    var record = document.getElementById("recordbtn");
+    var delete_last = document.getElementById("delete_lastbtn");
+    var lng = document.getElementById("langselector").value;
+    record.disabled = true;
+    delete_last.disabled = true;
+    var videotime = player.playerInfo.currentTime;
+    if (vote.id == "recordbtn"){
+      console.log("record");
+      answer.labels.push(videotime);
+      document.getElementById(lng+"_dislike_notice").style.display = 'none';
+      document.getElementById(lng+"_like_notice").style.display = 'block';
+    } else if(vote.id == "delete_lastbtn"){
+      console.log("delete_lastbtn");
+      answer.labels.pop();
+      document.getElementById(lng+"_dislike_notice").style.display = 'block';
+      document.getElementById(lng+"_like_notice").style.display = 'none';
+    } else{
+      consol.log("an error occurred while voting");
+    }
+    record.disabled = false;
+    delete_last.disabled = false;
+    console.log(videotime);
+    console.log(answer.labels);
+  }
+
+  function handle_submission(){
+    console.log("onsubmit");
+    var toPass = JSON.stringify(answer);
+    document.getElementById("answerinput").value = toPass;
+    //organize information in json
+    //call server
+  }
+
+</script>
+
+{% endblock %}
+{% block navbar_extra %}
+<div class="justify-content-end">
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <button class="btn btn-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasInstructions" aria-controls="offcanvasInstructions">Instructions</button>
+    </li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasInstructions" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Instructions</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      {% include 'instructions.html' %}
+    </div>
+</div>
+
+    <div class="container">
+      <div class="row">
+        <div  name="eng_elem">
+          <p class="lh-base"> Play the video to start the experiment. </p>
+          <p class="lh-base"> <b>Notice</b> that you can Submit your answer only if the video is ended! </p>
+        </div>
+        <div style="display: none" name="it_elem">
+          <p class="lh-base"> Premi play al video per iniziare l'esperimento.</p>
+          <p class="lh-base"> <b>Nota:</b> puoi consegnare la tua risposta premendo su "Submit" solo se il video è terminato!</p>
+        </div>
+      </div>
+        <div class="row">
+            <div class=" ratio ratio-16x9 border" >
+                <iframe id="video" type="text/html" src="https://www.youtube.com/embed/FK-HFeeOLn8?enablejsapi=1;"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; clipboard-write; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="allowfullscreen"></iframe>
+            </div>
+      </div>
+        <div class="row ">
+        <div class="d-flex justify-content-center">
+            
+                <input onclick="handle_vote(this)" type="button" id="recordbtn" class="btn btn-success" value="RECORD">
+            
+                <input onclick="handle_vote(this)" type="button" id="delete_lastbtn" class="btn btn-danger" value="DELETE_LAST">
+             
+          </div>
+        </div>
+        <div class="row">
+          <div name="eng_elem">
+            <p id="eng_like_notice" class="lh-base" style="display: none; color:green"> You Labelled the interaction.</p>
+            <p id="eng_dislike_notice" class="lh-base" style="display: none;color:red"> You Deleted last label.</p>
+          </div>
+          <div name="it_elem" style="display: none;">
+            <p id="it_like_notice" class="lh-base" style="display: none; color:green"> </p>
+            <p id="it_dislike_notice" class="lh-base" style="display: none;color:red"> </p>
+          </div>
+        </div>
+        
+        <div class="row  justify-content-end">
+          <div class ="d-flex justify-content-end">
+            <div class="col-md-2">
+              <form id="evaluationForm" action="{{ url_for('handle_answer') }}" method="post">
+                <input type="hidden" id="answerinput" name="answerinput" >
+                <button onclick="handle_submission()" type="submit" class="btn btn-primary" id="submit" disabled="disabled">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        
+          
+    </div>
+
+        
+{%  endblock %}
+  
