@@ -1,0 +1,1 @@
+Here are placed all the common abstract classes, impro_msgs and utilities reused across the project
