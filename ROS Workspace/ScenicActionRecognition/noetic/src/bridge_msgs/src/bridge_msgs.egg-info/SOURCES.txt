@@ -1,0 +1,11 @@
+setup.py
+src/bridge_msgs/__init__.py
+src/bridge_msgs/ros1_emulator.py
+src/bridge_msgs/ros1_pub.py
+src/bridge_msgs/ros1_pub_builtin.py
+src/bridge_msgs/ros1_sub.py
+src/bridge_msgs/ros1_sub_builtin.py
+src/bridge_msgs.egg-info/PKG-INFO
+src/bridge_msgs.egg-info/SOURCES.txt
+src/bridge_msgs.egg-info/dependency_links.txt
+src/bridge_msgs.egg-info/top_level.txt
