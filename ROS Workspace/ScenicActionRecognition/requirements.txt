@@ -1,0 +1,7 @@
+numpy
+tensorflow
+pykalman
+scipy
+opencv-python
+pypaz
+mediapipe
