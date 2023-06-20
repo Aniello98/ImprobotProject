@@ -1,0 +1,7 @@
+- ros1_package_name: "bridge_msgs"
+  ros1_message_name: "JointCommand"
+  ros2_package_name: "bridge_msgs"
+  ros2_message_name: "JointCommand"
+  fields_1_to_2:
+    x: "x"
+    y: "y"

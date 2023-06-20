@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>bridge_msgs</name>
+  <version>0.0.0</version>
+  <description>The bridge_msgs package</description>
+  <maintainer email="mabel@openrobotics.org">Mabel Zhang</maintainer>
+  <license>TODO</license>
+
+  <!-- change the buildtool from catkin to ament_cmake -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <!-- <buildtool_depend>catkin</buildtool_depend> -->
+
+  <!-- use rosidl_default_generators instead of message_generation -->
+  <!-- this time, it's a buildtool instead of a dependency -->
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+  <!-- <build_depend>message_generation</build_depend> -->
+
+  <!-- use builtin_interfaces instead of std_msgs -->
+  <build_depend>builtin_interfaces</build_depend>
+  <!--  <build_depend>std_msgs</build_depend> -->
+
+  <!-- ignore unneeded deps -->
+  <!-- <exec_depend>rospy</exec_depend> -->
+  <!-- <exec_depend>roscpp</exec_depend> -->
+  
+  <exec_depend>builtin_interfaces</exec_depend>
+  <!-- <exec_depend>std_msgs</exec_depend>-->
+
+  <!-- use rosidl_default_runtime instead of message_runtime -->
+  <exec_depend>rosidl_default_runtime</exec_depend>
+  <!-- <exec_depend>message_runtime</exec_depend> -->
+
+  <!-- add to the rosidl_interface_packages group-->
+  <member_of_group>rosidl_interface_packages</member_of_group>
+  
+  <export>
+    <build_type>ament_cmake</build_type>
+    <!--ros1_bridge mapping_rules="ros1_bridge_mappings.yaml"/-->
+  </export>
+</package>
