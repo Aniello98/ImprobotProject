@@ -10,3 +10,5 @@ My contribution to the project consists of:
 * [ReactionModule](ROS%20Workspace/ReactionModule) improvements in terms of obstacle detection algorithms, concurrency handling of movements, and improvements in navigation algorithms facilitating the robot to reach the interlocutor.
 * Design of non-verbal reactions as a set of atomic movements performed by the system, and a following analysis of results through the use of a [ReactionsSurvey](ReactionsSurvey)
 * Implementation of a behavioural model through Reinforcement Learning techniques in [RobocchioRL](RobocchioRL). Before applying these algorithms, preprocessing and acquisition of data has been done through the use of an online survey in [ImprovSurvey](ImprovSurvey).
+
+To read the whole summary go to [Executive Summary](Executive_Summary)
